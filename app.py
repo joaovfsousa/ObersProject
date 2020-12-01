@@ -1,10 +1,11 @@
+import os
+from datetime import datetime
+
 from flask import Flask, request
 
 from utils.cpf_validator import cpf_validator
 
 app = Flask(__name__)
-
-app.debug = True
 
 
 @app.route('/health', methods=['GET'])
@@ -14,8 +15,8 @@ def health():
     "message": "All right with the service",
     "code": "success",
     "data": {
-      "environment": "development",
-      "datetime_server": "2020-11-03T14:34:58.139738",
+      "environment": os.environ.get("FLASK_ENV"),
+      "datetime_server": datetime.now().isoformat(),
       "version": "1-0-2"
     }
   }
