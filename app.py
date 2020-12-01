@@ -1,6 +1,8 @@
-import flask
+from flask import Flask, request
 
-app = flask.Flask(__name__)
+from utils.cpf_validator import cpf_validator
+
+app = Flask(__name__)
 
 app.debug = True
 
@@ -17,6 +19,25 @@ def health():
       "version": "1-0-2"
     }
   }
+  return response
+
+
+@app.route('/validator/Cpf', methods=['POST'])
+def validador_cpf():
+  cpf = request.get_json()["cpf"]
+
+  is_cpf_valid = cpf_validator(cpf)
+
+  code = "success" if is_cpf_valid else "error"
+  cpf_status = "cpf is valid" if is_cpf_valid else "cpf is not valid"
+
+  response = {
+    "status": 200,
+    "cpf": str(cpf),
+    "code": code,
+    "data": cpf_status
+  }
+
   return response
 
 
