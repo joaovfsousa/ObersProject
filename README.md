@@ -20,6 +20,8 @@ sudo docker run --publish 9095:9095 --detach --name FlaskApi obers-project:1.0
 
 ↗️ GET localhost:9095/health to check whether or not the service is running
 
+### Route /validator/Cpf
+
 ↗️ POST localhost:9095/validator/Cpf to validate a cpf
 
 - Request body example
