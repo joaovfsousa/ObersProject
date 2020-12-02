@@ -21,7 +21,13 @@ class HealthRouteTest(unittest.TestCase):
       }
     }
 
-    self.assertEqual(response.json, expected)
+    self.assertEqual(response.json["status"], expected["status"])
+    self.assertEqual(response.json["message"], expected["message"])
+    self.assertEqual(response.json["code"], expected["code"])
+    self.assertEqual(
+      response.json["data"]["environment"],
+      expected["data"]["environment"]
+    )
 
   def test_health_route_status_code(self):
     response = self.app.get('/health')
