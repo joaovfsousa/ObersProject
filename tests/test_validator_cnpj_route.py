@@ -4,45 +4,45 @@ import json
 from app import app
 
 
-class ValidatorCpfRouteTest(unittest.TestCase):
+class ValidatorCnpjRouteTest(unittest.TestCase):
 
   def setUp(self):
     self.app = app.test_client()
 
-  def test_post_valid_cpf(self):
+  def test_post_valid_cnpj(self):
     payload = json.dumps({
-      "cpf": 15493825007
+      "cnpj": "04182131000198"
     })
 
     expected = {
       "status": 200,
-      "cpf": "15493825007",
+      "cnpj": "04182131000198",
       "code": "success",
-      "data": "cpf is valid"
+      "data": "cnpj is valid"
     }
 
     response = self.app.post(
-      '/validator/Cpf',
+      '/validator/Cnpj',
       headers={"Content-Type": "application/json"},
       data=payload
     )
 
     self.assertEqual(response.json, expected)
 
-  def test_post_invalid_cpf(self):
+  def test_post_invalid_cnpj(self):
     payload = json.dumps({
-      "cpf": 15493825006
+      "cnpj": "12345678901234"
     })
 
     expected = {
       "status": 200,
-      "cpf": "15493825006",
+      "cnpj": "12345678901234",
       "code": "error",
-      "data": "cpf is not valid"
+      "data": "cnpj is not valid"
     }
 
     response = self.app.post(
-      '/validator/Cpf',
+      '/validator/Cnpj',
       headers={"Content-Type": "application/json"},
       data=payload
     )

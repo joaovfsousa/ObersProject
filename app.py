@@ -4,6 +4,7 @@ from datetime import datetime
 from flask import Flask, request
 
 from utils.cpf_validator import cpf_validator
+from utils.cnpj_validator import cnpj_validator
 
 app = Flask(__name__)
 
@@ -37,6 +38,25 @@ def validador_cpf():
     "cpf": str(cpf),
     "code": code,
     "data": cpf_status
+  }
+
+  return response
+
+
+@app.route('/validator/Cnpj', methods=['POST'])
+def validador_cnpj():
+  cnpj = request.get_json()["cnpj"]
+
+  is_cnpj_valid = cnpj_validator(cnpj)
+
+  code = "success" if is_cnpj_valid else "error"
+  cnpj_status = "cnpj is valid" if is_cnpj_valid else "cnpj is not valid"
+
+  response = {
+    "status": 200,
+    "cnpj": str(cnpj),
+    "code": code,
+    "data": cnpj_status
   }
 
   return response
